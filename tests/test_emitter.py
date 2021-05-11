@@ -88,7 +88,6 @@ def start_watching(path=None, use_full_emitter=False, recursive=True):
         emitter.suppress_history = True
 
     emitter.start()
-    time.sleep(0.01)
 
 
 def rerun_filter(exc, *args):
