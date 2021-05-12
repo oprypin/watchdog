@@ -17,7 +17,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         with:
-          ref: ${{ github.event.inputs.branch }}
+          fetch-depth: 0
       - name: Use Python ${{ matrix.python }}
         uses: actions/setup-python@v2
         with:
@@ -26,3 +26,6 @@ jobs:
         run: python -m pip install .
       - name: Run
         run: python test.py
+      - run: cp test.py test_.py
+      - name: Bisect
+        run: git bisect start && git bisect bad && git bisect good v2.0.3 && git bisect run bash -x -c 'PYTHONPATH=src python test_.py | grep FileModifiedEvent'
