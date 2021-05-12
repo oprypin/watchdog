@@ -4,7 +4,7 @@ from watchdog.events import FileSystemEventHandler
 
 
 with open("a.txt", "w") as f:
-  f.write("aa\n")
+    f.write("aa\n")
 time.sleep(1)
 
 event_handler = FileSystemEventHandler()
@@ -25,6 +25,9 @@ f.close()
 time.sleep(1)
 observer.stop()
 observer.join()
+
+f = open("a.txt", "w")
+
 time.sleep(1)
 
 print('--------')
