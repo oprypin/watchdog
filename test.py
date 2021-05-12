@@ -13,7 +13,7 @@ event_handler.on_any_event = print
 print('--------')
 
 observer = Observer()
-observer.schedule(event_handler, ".")
+observer.schedule(event_handler, ".", recursive=True)
 observer.start()
 time.sleep(1)
 
