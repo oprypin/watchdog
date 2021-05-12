@@ -1,20 +1,19 @@
 import time
-import logging
 from watchdog.observers import Observer
-from watchdog.events import LoggingEventHandler
+from watchdog.events import FileSystemEventHandler
 
 
 f = open("a.txt", "w")
 
-logging.basicConfig(level=logging.INFO)
-event_handler = LoggingEventHandler()
+event_handler = FileSystemEventHandler()
+event_handler.on_any_event = print
 
 observer = Observer()
 observer.schedule(event_handler, ".", recursive=True)
 observer.start()
 time.sleep(0.1)
 
-logging.info('[appending to a file]')
+print('[appending to a file]')
 f.write("aa\n")
 f.flush()
 
@@ -24,14 +23,14 @@ observer.join()
 
 f.close()
 
-logging.info('--------')
+print('--------')
 
 observer = Observer()
 observer.schedule(event_handler, ".", recursive=True)
 observer.start()
 time.sleep(0.1)
 
-logging.info('[overwriting a file]')
+print('[overwriting a file]')
 f = open("a.txt", "w")
 f.write("bb\n")
 f.close()
