@@ -3,31 +3,17 @@ from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 
 
-f = open("a.txt", "w")
+with open("a.txt", "w") as f:
+  f.write("aa\n")
 time.sleep(1)
 
 event_handler = FileSystemEventHandler()
 event_handler.on_any_event = print
 
-observer = Observer()
-observer.schedule(event_handler, ".", recursive=True)
-observer.start()
-time.sleep(1)
-
-print('[appending to a file]')
-f.write("aa\n")
-f.flush()
-
-time.sleep(1)
-observer.stop()
-observer.join()
-
-f.close()
-
 print('--------')
 
 observer = Observer()
-observer.schedule(event_handler, ".", recursive=True)
+observer.schedule(event_handler, ".")
 observer.start()
 time.sleep(1)
 
@@ -39,3 +25,28 @@ f.close()
 time.sleep(1)
 observer.stop()
 observer.join()
+time.sleep(1)
+
+print('--------')
+
+observer = Observer()
+observer.schedule(event_handler, ".")
+observer.start()
+time.sleep(1)
+
+print('[appending to a file]')
+f.write("cc\n")
+f.flush()
+
+time.sleep(1)
+
+print('[appending to a file]')
+f.write("dd\n")
+f.flush()
+
+time.sleep(1)
+observer.stop()
+observer.join()
+time.sleep(1)
+
+f.close()
